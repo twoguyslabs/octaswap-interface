@@ -1,0 +1,21 @@
+{
+  "$schema": "https://uniswap.org/tokenlist.schema.json",
+  "logoURI": "ipfs://QmXfzKRvjZz3u5JRgC4v5mGVbm9ahrUiB4DgzHBsnWbTMM",
+  "name": "Uniswap Token List",
+  "version": {
+    "major": 1,
+    "minor": 0,
+    "patch": 0
+  },
+  "timestamp": "2024-01-01T00:00:00.000Z",
+  "keywords": ["uniswap", "token", "list"],
+  "tokens": [
+    {
+      "address": null,
+      "name": "Ethereum",
+      "symbol": "ETH",
+      "decimals": 18,
+      "chainId": 1
+    }
+  ]
+}
