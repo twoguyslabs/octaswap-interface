@@ -1,5 +1,4 @@
 // Settings types
-
 type SettingsState = {
   slippage: number;
   deadline: number;
@@ -11,7 +10,6 @@ type SettingsProps = {
 };
 
 // Native coin types
-
 type NativeCoin = {
   chainId: number;
   name: string;
@@ -24,8 +22,7 @@ type NativeCoinData = {
   [chainId: number]: NativeCoin;
 };
 
-// Tokens types
-
+// Token types
 type Token = {
   chainId: number;
   address: string | null;
@@ -35,8 +32,10 @@ type Token = {
   logoURI?: string;
 };
 
-// Swap types
+// Token list types
+type TokenList = Token[] | undefined;
 
+// Swap types
 type SwapState = {
   chainId: number;
   selectedTokenA: Token | null;

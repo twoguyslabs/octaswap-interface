@@ -2,7 +2,7 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createAppKit } from "@reown/appkit/react";
-import { mainnet, bsc } from "@reown/appkit/networks";
+import { sepolia, mainnet, bsc } from "@reown/appkit/networks";
 import React, { type ReactNode } from "react";
 import { cookieToInitialState, WagmiProvider, type Config } from "wagmi";
 import { wagmiAdapter } from "@/config/wagmi";
@@ -25,34 +25,26 @@ const metadata = {
 };
 
 // Create the modal
-createAppKit({
+export const modal = createAppKit({
   adapters: [wagmiAdapter],
   projectId,
-  networks: [octaspace, mainnet, bsc],
+  networks: [octaspace, mainnet, bsc, sepolia],
   defaultNetwork: octaspace,
   metadata: metadata,
   features: {
     analytics: true, // Optional - defaults to your Cloud configuration
   },
+  chainImages: {
+    800001: "/octa-logo.svg",
+    11155111: "/eth-logo.png",
+  },
 });
 
-function ReownProvider({
-  children,
-  cookies,
-}: {
-  children: ReactNode;
-  cookies: string | null;
-}) {
-  const initialState = cookieToInitialState(
-    wagmiAdapter.wagmiConfig as Config,
-    cookies,
-  );
+function ReownProvider({ children, cookies }: { children: ReactNode; cookies: string | null }) {
+  const initialState = cookieToInitialState(wagmiAdapter.wagmiConfig as Config, cookies);
 
   return (
-    <WagmiProvider
-      config={wagmiAdapter.wagmiConfig as Config}
-      initialState={initialState}
-    >
+    <WagmiProvider config={wagmiAdapter.wagmiConfig as Config} initialState={initialState}>
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </WagmiProvider>
   );

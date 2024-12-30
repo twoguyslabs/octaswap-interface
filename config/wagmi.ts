@@ -1,6 +1,6 @@
 import { cookieStorage, createStorage } from "@wagmi/core";
 import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
-import { mainnet, bsc } from "@reown/appkit/networks";
+import { sepolia, mainnet, bsc } from "@reown/appkit/networks";
 import { octaspace } from "./chain";
 
 // Get projectId from https://cloud.reown.com
@@ -10,7 +10,7 @@ if (!projectId) {
   throw new Error("Project ID is not defined");
 }
 
-export const networks = [octaspace, mainnet, bsc];
+export const networks = [octaspace, mainnet, bsc, sepolia];
 
 //Set up the Wagmi Adapter (Config)
 export const wagmiAdapter = new WagmiAdapter({

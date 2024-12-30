@@ -6,11 +6,11 @@ import Switch from "@/components/switch";
 import SwapCore from "@/components/swap-core";
 import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useState } from "react";
-import { useAccount } from "wagmi";
+import { useChainId } from "wagmi";
 import { native } from "@/lib/native";
 
 export default function Home() {
-  const { chainId } = useAccount();
+  const chainId = useChainId();
 
   const [settings, setSettings] = useState<SettingsState>({
     slippage: 1,
@@ -31,19 +31,9 @@ export default function Home() {
           <Settings settings={settings} onSettings={setSettings} />
           <Card>
             <CardContent className="p-0">
-              <SwapBox
-                labelHtmlFor="from"
-                labelText="From"
-                token={tokenZero}
-                onSetToken={setTokenZero}
-              />
-              <Switch />
-              <SwapBox
-                labelHtmlFor="to"
-                labelText="To"
-                token={tokenOne}
-                onSetToken={setTokenOne}
-              />
+              <SwapBox labelHtmlFor="from" labelText="From" token={tokenZero} onSetToken={setTokenZero} />
+              <Switch onSetTokenZero={() => setTokenZero(tokenOne)} onSetTokenOne={() => setTokenOne(tokenZero)} />
+              <SwapBox labelHtmlFor="to" labelText="To" token={tokenOne} onSetToken={setTokenOne} />
             </CardContent>
           </Card>
         </div>

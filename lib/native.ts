@@ -4,11 +4,11 @@ export const NATIVE_COIN_DATA: NativeCoinData = {
     name: "Ethereum",
     symbol: "ETH",
     decimals: 18,
-    logoURI: "/eth-logo.svg",
+    logoURI: "/eth-logo.png",
   },
   56: {
     chainId: 56,
-    name: "Binance Smart Chain",
+    name: "BNB Smart Chain",
     symbol: "BNB",
     decimals: 18,
     logoURI: "/bnb-logo.svg",
@@ -20,10 +20,19 @@ export const NATIVE_COIN_DATA: NativeCoinData = {
     decimals: 18,
     logoURI: "/octa-logo.svg",
   },
+  11155111: {
+    chainId: 11155111,
+    name: "Sepolia",
+    symbol: "ETH",
+    decimals: 18,
+    logoURI: "/eth-logo.png",
+  },
 };
 
 export function native(chainId: number | undefined) {
-  if (!chainId) return null;
+  if (!chainId) {
+    return null;
+  }
 
   return {
     ...NATIVE_COIN_DATA[chainId],

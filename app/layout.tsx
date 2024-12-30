@@ -3,7 +3,8 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
-import Navigation from "@/components/navigation";
+import Header from "@/components/header";
+import NavigationMenu from "@/components/navigation-menu";
 import { headers } from "next/headers";
 import ReownProvider from "@/contexts/reown-context";
 
@@ -26,15 +27,16 @@ export default async function RootLayout({
   const cookies = headersObj.get("cookie");
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script src="https://unpkg.com/react-scan/dist/auto.global.js" async />
+      </head>
       <body className={cn(poppins.className, "antialiased")}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Navigation />
-          <ReownProvider cookies={cookies}>{children}</ReownProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <ReownProvider cookies={cookies}>
+            <Header />
+            {children}
+            <NavigationMenu />
+          </ReownProvider>
         </ThemeProvider>
       </body>
     </html>
