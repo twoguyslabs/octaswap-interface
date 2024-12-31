@@ -1,7 +1,7 @@
 import { erc20Abi } from "viem";
 import { useAccount, useBalance, useReadContract } from "wagmi";
 
-export default function useTokenBalance(token: Token | null) {
+export default function useTokenBalance(token: Token | undefined) {
   const isNullAddress = token?.address === null;
 
   const { address } = useAccount();

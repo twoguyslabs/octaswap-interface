@@ -29,11 +29,7 @@ export const NATIVE_COIN_DATA: NativeCoinData = {
   },
 };
 
-export function native(chainId: number | undefined) {
-  if (!chainId) {
-    return null;
-  }
-
+export function native(chainId: number): Token {
   return {
     ...NATIVE_COIN_DATA[chainId],
     address: null,

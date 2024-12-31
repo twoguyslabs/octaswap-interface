@@ -1,13 +1,16 @@
 "use client";
 
 import Settings from "@/components/settings";
-import SwapBox from "@/components/swap-box";
 import Switch from "@/components/switch";
 import SwapCore from "@/components/swap-core";
 import { Card, CardContent } from "@/components/ui/card";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useChainId } from "wagmi";
+import TokenBox from "@/components/token-box";
+import useTokenParams from "@/hooks/use-token-params";
+import useToken from "@/hooks/use-token";
 import { native } from "@/lib/native";
+import useWatchChain from "@/hooks/useWatchChain";
 
 export default function Home() {
   const chainId = useChainId();
@@ -17,28 +20,47 @@ export default function Home() {
     deadline: 5,
   });
 
-  const [tokenZero, setTokenZero] = useState<Token | null>(native(chainId));
-  const [tokenOne, setTokenOne] = useState<Token | null>(null);
+  const { inputCurrency, outputCurrency, handleSetInputCurrency, handleSetOutputCurrency } = useTokenParams();
 
-  useEffect(() => {
-    setTokenZero(native(chainId));
-  }, [chainId]);
+  const { token: tokenZero, setToken: setTokenZero } = useToken(inputCurrency, native(chainId));
+  const { token: tokenOne, setToken: setTokenOne } = useToken(outputCurrency);
+
+  const [amountZero, setAmountZero] = useState("");
+  const [amountOne, setAmountOne] = useState("");
+
+  useWatchChain();
 
   return (
     <main className="mx-auto max-w-md px-4 pt-5 sm:px-0 md:pt-10">
-      <div className="space-y-4">
+      <form className="space-y-3" onSubmit={(e) => e.preventDefault()}>
         <div>
           <Settings settings={settings} onSettings={setSettings} />
           <Card>
             <CardContent className="p-0">
-              <SwapBox labelHtmlFor="from" labelText="From" token={tokenZero} onSetToken={setTokenZero} />
+              <TokenBox
+                labelHtmlFor="from"
+                labelText="From"
+                onSetTokenParam={handleSetInputCurrency}
+                token={tokenZero}
+                onSetToken={setTokenZero}
+                amount={amountZero}
+                onSetAmount={setAmountZero}
+              />
               <Switch onSetTokenZero={() => setTokenZero(tokenOne)} onSetTokenOne={() => setTokenOne(tokenZero)} />
-              <SwapBox labelHtmlFor="to" labelText="To" token={tokenOne} onSetToken={setTokenOne} />
+              <TokenBox
+                labelHtmlFor="to"
+                labelText="To"
+                onSetTokenParam={handleSetOutputCurrency}
+                token={tokenOne}
+                onSetToken={setTokenOne}
+                amount={amountOne}
+                onSetAmount={setAmountOne}
+              />
             </CardContent>
           </Card>
         </div>
         <SwapCore />
-      </div>
+      </form>
     </main>
   );
 }

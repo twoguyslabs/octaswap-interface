@@ -1,18 +1,6 @@
 import { BiInfoCircle, BiSolidCog } from "react-icons/bi";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "./ui/dialog";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "./ui/tooltip";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
@@ -34,10 +22,7 @@ function Deadline({
               <BiInfoCircle size={17} />
             </TooltipTrigger>
             <TooltipContent className="w-60" sideOffset={5}>
-              <p>
-                Your transaction will revert if it is left confirming for longer
-                than this time.
-              </p>
+              <p>Your transaction will revert if it is left confirming for longer than this time.</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -49,15 +34,10 @@ function Deadline({
             type="text"
             placeholder="5"
             value={settings.deadline}
-            onChange={(e) =>
-              onHandleSettings("deadline", Number(e.target.value))
-            }
+            onChange={(e) => onHandleSettings("deadline", Number(e.target.value))}
           />
         </div>
-        <Button
-          variant="outline"
-          onClick={() => onHandleSettings("deadline", 5)}
-        >
+        <Button variant="outline" onClick={() => onHandleSettings("deadline", 5)}>
           Reset
         </Button>
       </div>
@@ -82,10 +62,7 @@ function Slippage({
               <BiInfoCircle size={17} />
             </TooltipTrigger>
             <TooltipContent className="w-60" sideOffset={5}>
-              <p>
-                Your transaction will revert if the price changes more than the
-                slippage percentage.
-              </p>
+              <p>Your transaction will revert if the price changes more than the slippage percentage.</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -108,9 +85,7 @@ function Slippage({
             type="text"
             placeholder="1"
             value={settings.slippage}
-            onChange={(e) =>
-              onHandleSettings("slippage", Number(e.target.value))
-            }
+            onChange={(e) => onHandleSettings("slippage", Number(e.target.value))}
           />
         </div>
       </div>
@@ -129,10 +104,7 @@ export default function Settings({ settings, onSettings }: SettingsProps) {
           <BiSolidCog size={23} />
         </DialogTrigger>
       </div>
-      <DialogContent
-        className="w-[90%] max-w-sm rounded-lg"
-        onOpenAutoFocus={(e) => e.preventDefault()}
-      >
+      <DialogContent className="w-[90%] max-w-sm rounded-lg" onOpenAutoFocus={(e) => e.preventDefault()}>
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>
           <DialogDescription>Change the settings of the swap</DialogDescription>

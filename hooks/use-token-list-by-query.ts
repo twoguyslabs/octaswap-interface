@@ -1,41 +1,33 @@
-import { mergeTokens } from "@/lib/utils";
-import useImportedTokenList from "./use-imported-token-list";
-import useOfficialTokenList from "./use-official-token-list";
+import { isTokenInList, matchQuery, mergeTokens } from "@/lib/utils";
 import { useMemo } from "react";
 import useCustomTokens from "./use-custom-tokens";
-import { isAddress } from "viem";
+import { isAddress, isAddressEqual } from "viem";
 
-export default function useTokenListByQuery(searchQuery: string) {
-  const officialTokenList = useOfficialTokenList();
-  const { importedTokenList } = useImportedTokenList();
+export default function useTokenListByQuery(
+  searchQuery: string,
+  nativeToken: Token[],
+  officialTokenList: Token[],
+  importedTokenList: Token[],
+) {
   const customTokens = useCustomTokens(searchQuery);
 
   const tokenList = useMemo(() => {
-    return mergeTokens([officialTokenList, importedTokenList]);
-  }, [officialTokenList, importedTokenList]);
+    return mergeTokens([nativeToken, officialTokenList, importedTokenList]);
+  }, [nativeToken, officialTokenList, importedTokenList]);
 
   const tokenListByQuery = useMemo(() => {
-    const lowerCaseQuery = searchQuery.toLowerCase();
-    const address = isAddress(searchQuery);
+    const filteredTokenList = tokenList.filter((token) => matchQuery(token, searchQuery));
 
-    const filteredTokenList = tokenList.filter(
-      (token) =>
-        token?.name?.toLowerCase().includes(lowerCaseQuery) ||
-        token?.symbol?.toLowerCase().includes(lowerCaseQuery) ||
-        token?.address?.toLowerCase().includes(lowerCaseQuery),
-    );
-
-    if (address) {
-      const isInTokenList = filteredTokenList.some((token) => token?.address?.toLowerCase().includes(lowerCaseQuery));
-      if (isInTokenList) {
+    if (isAddress(searchQuery)) {
+      if (isTokenInList(filteredTokenList, searchQuery)) {
         return filteredTokenList;
       } else {
-        return customTokens.filter((token) => token?.address?.toLowerCase().includes(lowerCaseQuery));
+        return customTokens.filter((token) => isAddressEqual(token.address as `0x${string}`, searchQuery));
       }
     }
 
     return filteredTokenList;
   }, [searchQuery, tokenList, customTokens]);
 
-  return tokenListByQuery;
+  return { tokenList, tokenListByQuery };
 }

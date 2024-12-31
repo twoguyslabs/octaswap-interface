@@ -27,9 +27,6 @@ export default async function RootLayout({
   const cookies = headersObj.get("cookie");
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <script src="https://unpkg.com/react-scan/dist/auto.global.js" async />
-      </head>
       <body className={cn(poppins.className, "antialiased")}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <ReownProvider cookies={cookies}>

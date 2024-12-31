@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { erc20Abi } from "viem";
 import { useReadContract } from "wagmi";
 import { useChainId } from "wagmi";
-export default function useCustomToken(address: string) {
+export default function useCustomTokens(address: string) {
   const chainId = useChainId();
-  const [tokens, setTokens] = useState<Token[]>([]);
+  const [customTokens, setCustomTokens] = useState<Token[]>([]);
 
   const { data: name } = useReadContract({
     abi: erc20Abi,
@@ -24,17 +24,11 @@ export default function useCustomToken(address: string) {
     functionName: "decimals",
   });
 
-  const token = useMemo(() => {
+  useEffect(() => {
     if (name && symbol && decimals) {
-      return { chainId, address, name, symbol, decimals, logoURI: "" };
+      setCustomTokens([{ chainId, address, name, symbol, decimals, logoURI: "" }]);
     }
   }, [chainId, address, name, symbol, decimals]);
 
-  useEffect(() => {
-    if (token) {
-      setTokens([token]);
-    }
-  }, [token]);
-
-  return tokens;
+  return customTokens;
 }

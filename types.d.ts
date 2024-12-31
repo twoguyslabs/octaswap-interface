@@ -32,6 +32,8 @@ type Token = {
   logoURI?: string;
 };
 
+type TokenQuery = "inputCurrency" | "outputCurrency";
+
 // Token list types
 type TokenList = Token[] | undefined;
 
