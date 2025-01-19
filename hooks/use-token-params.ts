@@ -9,25 +9,15 @@ export default function useTokenParams() {
   const inputCurrency = searchParams.get("inputCurrency");
   const outputCurrency = searchParams.get("outputCurrency");
 
-  const handleSetInputCurrency = useCallback(
-    (value: string | null) => {
+  const handleSetTokenParam = useCallback(
+    (key: "inputCurrency" | "outputCurrency", value: string | null) => {
       if (!value) return;
       const params = new URLSearchParams(searchParams.toString());
-      params.set("inputCurrency", value);
+      params.set(key, value);
       router.replace(`${pathname}?${params.toString()}`);
     },
     [searchParams, pathname, router],
   );
 
-  const handleSetOutputCurrency = useCallback(
-    (value: string | null) => {
-      if (!value) return;
-      const params = new URLSearchParams(searchParams.toString());
-      params.set("outputCurrency", value);
-      router.replace(`${pathname}?${params.toString()}`);
-    },
-    [searchParams, pathname, router],
-  );
-
-  return { inputCurrency, outputCurrency, handleSetInputCurrency, handleSetOutputCurrency };
+  return { inputCurrency, outputCurrency, handleSetTokenParam };
 }

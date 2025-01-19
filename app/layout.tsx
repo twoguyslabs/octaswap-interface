@@ -5,8 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 import Header from "@/components/header";
 import NavigationMenu from "@/components/navigation-menu";
-import { headers } from "next/headers";
-import ReownProvider from "@/contexts/reown-context";
+import RainbowKitProvider from "@/contexts/rainbowkit-context";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -23,17 +22,15 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const headersObj = await headers();
-  const cookies = headersObj.get("cookie");
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn(poppins.className, "antialiased")}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <ReownProvider cookies={cookies}>
+          <RainbowKitProvider>
             <Header />
             {children}
             <NavigationMenu />
-          </ReownProvider>
+          </RainbowKitProvider>
         </ThemeProvider>
       </body>
     </html>

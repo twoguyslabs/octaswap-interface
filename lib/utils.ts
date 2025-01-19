@@ -30,3 +30,9 @@ export function matchQuery(token: Token | undefined, query: string) {
 export function getTokenByAddress(address: string, tokenList: Token[]) {
   return tokenList.find((token) => token.address === address);
 }
+
+export function initialToken(param: string | null, defaultToken?: boolean) {
+  if (param) return param;
+  if (!defaultToken) return undefined;
+  return defaultToken;
+}

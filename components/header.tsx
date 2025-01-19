@@ -1,6 +1,6 @@
-import ChainSelector from "./chain-selector";
 import AccountButton from "./account-button";
 import Link from "next/link";
+import ChainSelector from "./chain-selector";
 
 export default function Navigation() {
   return (

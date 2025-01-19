@@ -23,6 +23,8 @@ type NativeCoinData = {
 };
 
 // Token types
+type TokenParam = string | null;
+
 type Token = {
   chainId: number;
   address: string | null;
