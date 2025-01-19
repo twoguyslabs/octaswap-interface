@@ -7,6 +7,7 @@ interface TokenListDialogContextProps {
 
 const TokenListDialogContext = createContext<TokenListDialogContextProps | undefined>(undefined);
 
+// TODO: Add a way to close the dialog
 export function TokenListDialogProvider({ children }: { children: ReactNode }) {
   const [tokenParamKey, setTokenParamKey] = useState<"inputCurrency" | "outputCurrency" | null>(null);
 
